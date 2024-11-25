@@ -18,8 +18,12 @@ def connect():
 
 
 # configure pins
+led_onboard = Pin("LED", Pin.OUT)
 led = Pin(16, Pin.OUT)
 button = Pin(15, Pin.IN, Pin.PULL_DOWN)
+
+# pico is on!
+led_onboard.on()
 
 #configure wifi
 ssid = 'FRITZ!Box 6660 Cable AC'
@@ -30,7 +34,7 @@ bridge = "192.168.178.21"
 auth = "HJmaGj86m7iUN0TSgKyzUo9TU4Eg8nFctr9bwiFI"
 
 #configure light
-light = 3
+light = 6 #Küche
 
 #setup url interfaces
 url = f"https://{bridge}/api/{auth}/lights/{light}/state"
@@ -39,6 +43,14 @@ url = f"https://{bridge}/api/{auth}/lights/{light}/state"
 #trying to connect
 try:
     ip = connect()
+    # pico is ready!
+    led_onboard.off()
+    sleep(0.5)
+    led_onboard.on()
+    sleep(0.5)
+    led_onboard.off()
+    sleep(0.5)
+    led_onboard.on()
 except KeyboardInterrupt:
     machine.reset()
     
